@@ -21,8 +21,8 @@ services:
     image: mariadb:10.7
     container_name: mariadb_db
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root_password}
       MYSQL_DATABASE: ${WP_DB_NAME:-wordpress}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root_password}
       MYSQL_USER: ${WP_DB_USER:-wordpress}
       MYSQL_PASSWORD: ${WP_DB_PASSWORD:-wp_password}
     volumes:
