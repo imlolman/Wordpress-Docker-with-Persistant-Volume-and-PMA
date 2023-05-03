@@ -1,0 +1,47 @@
+version: '3.9'
+
+services:
+  wordpress:
+    image: wordpress:6.1-php8.1
+    container_name: wordpress_dev
+    depends_on:
+      - db
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: ${WP_DB_USER:-wordpress}
+      WORDPRESS_DB_PASSWORD: ${WP_DB_PASSWORD:-wp_password}
+      WORDPRESS_DB_NAME: ${WP_DB_NAME:-wordpress}
+    volumes:
+      - ./wordpress:/var/www/html
+    ports:
+      - "80:80"
+    restart: always
+
+  db:
+    image: mariadb:10.7
+    container_name: mariadb_db
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root_password}
+      MYSQL_DATABASE: ${WP_DB_NAME:-wordpress}
+      MYSQL_USER: ${WP_DB_USER:-wordpress}
+      MYSQL_PASSWORD: ${WP_DB_PASSWORD:-wp_password}
+    volumes:
+      - glubble_db:/var/lib/mysql
+    restart: always
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin
+    depends_on:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_USER: ${WP_DB_USER:-wordpress}
+      PMA_PASSWORD: ${WP_DB_PASSWORD:-wp_password}
+      PMA_ARBITRARY: 1
+    ports:
+      - "8080:80"
+    restart: always
+
+volumes:
+  glubble_db:
