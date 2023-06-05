@@ -3,7 +3,7 @@ version: '3.9'
 services:
   wordpress:
     image: wordpress:6.1-php8.1
-    container_name: wordpress_dev
+    container_name: wordpress_dev${RANDOM_ID:-1}
     depends_on:
       - db
     environment:
@@ -18,8 +18,8 @@ services:
     restart: always
 
   db:
-    image: mariadb:10.7
-    container_name: mariadb_db
+    image: mariadb:10.5.8
+    container_name: mariadb_db${RANDOM_ID:-1}
     environment:
       MYSQL_DATABASE: ${WP_DB_NAME:-wordpress}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root_password}
@@ -31,7 +31,7 @@ services:
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
-    container_name: phpmyadmin
+    container_name: phpmyadmin${RANDOM_ID:-1}
     depends_on:
       - db
     environment:
