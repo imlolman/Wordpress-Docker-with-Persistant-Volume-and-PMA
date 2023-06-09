@@ -2,5 +2,5 @@
 
 ## RUN INSTRUCTIONS
 - Clone the repo
-- Add A random number in .env
+- Change example.env to .env and add configurations
 - Run the bash file `run.sh`
